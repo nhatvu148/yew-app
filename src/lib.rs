@@ -1,5 +1,5 @@
 use gloo::console::log;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use yew::prelude::*;
 
 #[derive(Serialize, Deserialize)]
@@ -19,7 +19,10 @@ pub fn app() -> Html {
     log!(name);
     log!(serde_json::to_string_pretty(&my_object).unwrap());
     let class = "my_title";
-    let message: Option<&str> = None;// Some("I'm a message");
+    let message: Option<&str> = None; // Some("I'm a message");
+
+    let tasks = vec!["record video", "grocery shopping", "pet xilbe"];
+
     html! {
         <>
             <h1 class={class}>{"Hello World!!!"}</h1>
@@ -34,6 +37,14 @@ pub fn app() -> Html {
             } else {
                 <p>{"No messages to see today"}</p>
             }
+
+            <ui>
+                {list_to_html(tasks)}
+            </ui>
         </>
     }
+}
+
+fn list_to_html(list: Vec<&str>) -> Vec<Html> {
+    list.iter().map(|item| html!{<li>{item}</li>}).collect()
 }
